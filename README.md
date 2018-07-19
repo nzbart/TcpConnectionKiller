@@ -1,5 +1,5 @@
 # TCP connection killer
-Kills connections by process ID.
+Kills connections by process ID. Windows only.
 
 Usage:
 
