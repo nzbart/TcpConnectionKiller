@@ -11,23 +11,18 @@ string FormatAddress(DWORD ip)
 	return inet_ntoa(paddr);
 }
 
-uint16_t FixPortNumber(DWORD port)
-{
-	return ntohs(port & 0xffff);
-}
-
 void KillAll(vector<MIB_TCPROW2> const& toKill)
 {
 	for (auto con : toKill) {
 
 		MIB_TCPROW row;
 		row.dwLocalAddr = con.dwLocalAddr;
-		row.dwLocalPort = FixPortNumber(con.dwLocalPort);
+		row.dwLocalPort = con.dwLocalPort & 0xffff;
 		row.dwRemoteAddr = con.dwRemoteAddr;
-		row.dwRemotePort = FixPortNumber(con.dwRemotePort);
+		row.dwRemotePort = con.dwRemotePort & 0xffff;
 		row.dwState = MIB_TCP_STATE_DELETE_TCB;
 
-		cout << "Killing " << FormatAddress(row.dwLocalAddr) << ":" << row.dwLocalPort << " -> " << FormatAddress(row.dwRemoteAddr) << ":" << row.dwRemotePort << endl;
+		cout << "Killing " << FormatAddress(row.dwLocalAddr) << ":" << ntohs(static_cast<u_short>(row.dwLocalPort)) << " -> " << FormatAddress(row.dwRemoteAddr) << ":" << ntohs(static_cast<u_short>(row.dwRemotePort)) << endl;
 
 		DWORD result;
 		if ((result = SetTcpEntry(&row)) == 0)
