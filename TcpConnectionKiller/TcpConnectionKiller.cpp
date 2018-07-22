@@ -40,7 +40,7 @@ vector<MIB_TCPROW2> GetConnectionsFromProcess(int processIdToKill)
 {
 	auto tableMemory = vector<uint8_t>(1000000);
 	const auto table = reinterpret_cast<MIB_TCPTABLE2*>(&tableMemory[0]);
-	ULONG size = tableMemory.size();
+	ULONG size = static_cast<ULONG>(tableMemory.size());
 	if (GetTcpTable2(table, &size, TRUE) != 0)
 	{
 		throw exception("Failed to get TCP table");
