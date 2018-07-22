@@ -65,7 +65,7 @@ int main(const int argc, char const* argv[])
 		KillAll(rows);
 		cout << "Ensuring all connections were killed..." << endl;
 		auto const remainingRows = GetConnectionsFromProcess(processIdToKill);
-		if(remainingRows.size() != 0)
+		if(!remainingRows.empty())
 		{
 			throw exception("Not all connections were killed.");
 		}
