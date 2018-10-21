@@ -2,7 +2,11 @@
 Kills connections by process ID. Windows only.
 
 Usage:
+```
+TcpConnectionKiller.exe <process ID>
+```
 
+Example:
 ```
 .\TcpConnectionKiller.exe 28188
 ```
